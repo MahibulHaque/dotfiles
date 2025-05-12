@@ -1,0 +1,254 @@
+{
+  "editor.renderWhitespace": "none",
+  "editor.minimap.renderCharacters": false,
+  "editor.fontSize": 20,
+  "editor.lineHeight": 28,
+  "editor.fontFamily": "GeistMono Nerd Font, FiraCode Nerd Font, Consolas, 'Courier New', monospace",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.wordWrap": "on",
+
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+
+  // Vim Motions settings
+  "vim.easymotion": true,
+  "vim.leader": "<Space>",
+  "vim.hlsearch": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // NAVIGATION
+    // switch b/w buffers
+    { "before": ["<S-h>"], "commands": [":bprevious"] },
+    { "before": ["<S-l>"], "commands": [":bnext"] },
+
+    // splits
+    { "before": ["leader", "v"], "commands": [":vsplit"] },
+    { "before": ["leader", "s"], "commands": [":split"] },
+
+    // panes
+    {
+      "before": ["leader", "h"],
+      "commands": ["workbench.action.focusLeftGroup"]
+    },
+    {
+      "before": ["leader", "j"],
+      "commands": ["workbench.action.focusBelowGroup"]
+    },
+    {
+      "before": ["leader", "k"],
+      "commands": ["workbench.action.focusAboveGroup"]
+    },
+    {
+      "before": ["leader", "l"],
+      "commands": ["workbench.action.focusRightGroup"]
+    },
+    // NICE TO HAVE
+    { "before": ["leader", "w"], "commands": [":w!"] },
+    { "before": ["leader", "q"], "commands": [":q!"] },
+    { "before": ["leader", "x"], "commands": [":x!"] },
+    {
+      "before": ["[", "d"],
+      "commands": ["editor.action.marker.prev"]
+    },
+    {
+      "before": ["]", "d"],
+      "commands": ["editor.action.marker.next"]
+    },
+    {
+      "before": ["<leader>", "c", "a"],
+      "commands": ["editor.action.quickFix"]
+    },
+    { "before": ["leader", "f"], "commands": ["workbench.action.quickOpen"] },
+    {
+      "before": ["leader", "p"],
+      "commands": ["editor.action.formatDocument"]
+    },
+    {
+      "before": ["g", "h"],
+      "commands": ["editor.action.showDefinitionPreviewHover"]
+    }
+  ],
+  "vim.visualModeKeyBindings": [
+    // Stay in visual mode while indenting
+    { "before": ["<"], "commands": ["editor.action.outdentLines"] },
+    { "before": [">"], "commands": ["editor.action.indentLines"] },
+    // Move selected lines while staying in visual mode
+    { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
+    { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
+    // toggle comment selection
+    { "before": ["leader", "c"], "commands": ["editor.action.commentLine"] }
+  ],
+  "vim.insertModeKeyBindings": [
+    { "before": ["<C-a>"], "commands": ["editor.action.selectAll"] },
+    {
+      "before": ["<C-c>"],
+      "commands": ["editor.action.clipboardCopyAction"]
+    },
+    { "before": ["<C-x>"], "commands": ["editor.action.clipboardCutAction"] },
+    {
+      "before": ["k", "j"],
+      "after": ["<Esc>", "l"]
+    },
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"],
+      "commands": [
+        {
+          "command": "settings.cycle.lineNumber"
+        }
+      ]
+    }
+  ],
+  // vim mode viwy viwcmd+d p issue hack
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": ["p"],
+      "commands": ["editor.action.clipboardPasteAction"]
+    }
+  ],
+  "editor.lineNumbers": "relative",
+
+  "solidity.compileUsingRemoteVersion": "v0.4.17+commit.bdeb9e52",
+  "code-runner.runInTerminal": true,
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": "off"
+  },
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "editor.unicodeHighlight.allowedLocales": {
+    "cs": true
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[astro]": {
+    "editor.defaultFormatter": "astro-build.astro-vscode"
+  },
+  "gitlens.gitCommands.skipConfirmations": [
+    "fetch:command",
+    "switch:command",
+    "stash-push:command"
+  ],
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "editor.formatOnSave": true,
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.fontFamily": "GeistMono Nerd Font, FiraCode Nerd Font, Consolas, 'Courier New', monospace",
+  "prettier.useTabs": true,
+  "prettier.singleQuote": true,
+  "prettier.htmlWhitespaceSensitivity": "strict",
+  "prettier.proseWrap": "never",
+  "prettier.trailingComma": "all",
+  "prettier.singleAttributePerLine": true,
+  "prettier.tabWidth": 3,
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "better-comments.tags": [
+    {
+      "tag": "!",
+      "color": "#FF2D00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "?",
+      "color": "#3498DB",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "//",
+      "color": "#474747",
+      "strikethrough": true,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "todo",
+      "color": "#FF8C00",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    },
+    {
+      "tag": "*",
+      "color": "#98C379",
+      "strikethrough": false,
+      "underline": false,
+      "backgroundColor": "transparent",
+      "bold": false,
+      "italic": false
+    }
+  ],
+
+  "better-comments.highlightPlainText": true,
+  "terminal.explorerKind": "external",
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.codeActionsOnSave.mode": "problems",
+  "editor.minimap.enabled": false,
+  "prisma.showPrismaDataPlatformNotification": false,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "workbench.colorCustomizations": {
+    "[Material Theme Palenight High Contrast]": {}
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "[go.mod]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "git.ignoreRebaseWarning": true,
+  "git.confirmSync": false,
+  "editor.maxTokenizationLineLength": 30000,
+  "go.toolsManagement.autoUpdate": true,
+  "sonarlint.rules": {
+    "typescript:S6353": {
+      "level": "on"
+    },
+    "typescript:S905": {
+      "level": "on"
+    },
+    "typescript:S6819": {
+      "level": "on"
+    },
+    "docker:S6597": {
+      "level": "on"
+    }
+  },
+  "sonarlint.connectedMode.connections.sonarqube": [
+    {
+      "serverUrl": "https://code.selise.biz",
+      "connectionId": "https://code.selise.biz"
+    }
+  ],
+  "diffEditor.renderSideBySide": false,
+  "[xml]": {
+    "editor.defaultFormatter": "DotJoshJohnson.xml"
+  },
+  "sonarlint.focusOnNewCode": true,
+  "files.autoSave": "afterDelay",
+  "workbench.colorTheme": "One Dark Pro",
+  "[lua]": {
+    "editor.defaultFormatter": "yinfei.luahelper"
+  }
+}

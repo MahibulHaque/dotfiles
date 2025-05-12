@@ -1,0 +1,15 @@
+lastupdatecheck: 0
+recentrepos:
+    - F:\selise-repo\Asensis\skywalk-ui
+startuppopupversion: 5
+lastversion: 0.50.0
+customcommandshistory:
+    - q
+hidecommandlog: false
+ignorewhitespaceindiffview: false
+diffcontextsize: 3
+renamesimilaritythreshold: 50
+localbranchsortorder: recency
+remotebranchsortorder: alphabetical
+gitlogorder: topo-order
+gitlogshowgraph: always
