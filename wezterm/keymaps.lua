@@ -3,6 +3,46 @@ local wezterm = require("wezterm")
 local action = wezterm.action
 local M = {}
 
+local function workspaces(window, pane)
+	-- Here you can dynamically construct a longer list if needed
+
+	local home = wezterm.home_dir
+	local workspaces = {
+		{ id = home, label = "Home" },
+		{ id = "F:" .. "/work", label = "Work" },
+		{ id = "F:" .. "/personal", label = "Personal" },
+		{ id = home .. "/dotfiles", label = "Dotfiles" },
+	}
+
+	window:perform_action(
+		action.InputSelector({
+			action = wezterm.action_callback(function(inner_window, inner_pane, id, label)
+				if not id and not label then
+					wezterm.log_info("cancelled")
+				else
+					wezterm.log_info("id = " .. id)
+					wezterm.log_info("label = " .. label)
+					inner_window:perform_action(
+						action.SwitchToWorkspace({
+							name = label,
+							spawn = {
+								label = "Workspace: " .. label,
+								cwd = id,
+							},
+						}),
+						inner_pane
+					)
+				end
+			end),
+			title = "Choose Workspace",
+			choices = workspaces,
+			fuzzy = true,
+			fuzzy_description = "Fuzzy find and/or make a workspace",
+		}),
+		pane
+	)
+end
+
 M.keys = {
 	-- Send C-a when pressing C-a twice
 	{ mods = "LEADER", key = "a", action = action.SendKey({ key = "a", mods = "CTRL" }) },
@@ -28,6 +68,17 @@ M.keys = {
 	-- Key table for moving tabs and resizing panes
 	{ key = "r", mods = "LEADER", action = action.ActivateKeyTable({ name = "resize_pane", one_shot = false }) },
 	{ key = ".", mods = "LEADER", action = action.ActivateKeyTable({ name = "move_tab", one_shot = false }) },
+
+	-- Key for workspaces
+	{
+		key = "W",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action_callback(function(window, pane)
+			workspaces(window, pane)
+		end),
+	},
+	{ key = "n", mods = "CTRL", action = action.SwitchWorkspaceRelative(1) },
+	{ key = "p", mods = "CTRL", action = action.SwitchWorkspaceRelative(-1) },
 }
 
 M.key_tables = {

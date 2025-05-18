@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local mux = wezterm.mux
 local config = wezterm.config_builder()
 local constants = require("constant")
 local keymaps = require("keymaps")
@@ -42,6 +43,38 @@ config.window_padding = {
 }
 
 config.default_prog = { "pwsh.exe", "-NoLogo" }
+
+-- wezterm.on("gui-startup", function(cmd)
+-- 	-- allow `wezterm start -- something` to affect what we spawn
+-- 	-- in our initial window
+-- 	local args = {}
+-- 	if cmd then
+-- 		args = cmd.args
+-- 	end
+--
+-- 	-- Set a workspace for coding on a current project
+-- 	-- Top pane is for the editor, bottom pane is for the build tool
+-- 	local home_dir = wezterm.home_dir
+-- 	local work_dir = "F:/work"
+-- 	local personal_dir = "F:/personal"
+-- 	local dotflies_dir = home_dir .. "/dotfiles"
+-- 	mux.spawn_window({
+-- 		workspace = "Work",
+-- 		cwd = work_dir,
+-- 		args = args,
+-- 	})
+-- 	mux.spawn_window({
+-- 		workspace = "Personal",
+-- 		cwd = personal_dir,
+-- 		args = args,
+-- 	})
+-- 	mux.spawn_window({
+-- 		workspace = "Dotfiles",
+-- 		cwd = dotflies_dir,
+-- 		args = args,
+-- 	})
+-- 	mux.set_active_workspace("Work")
+-- end)
 
 wezterm.on("update-right-status", function(window, pane)
 	local stat = window:active_workspace()
@@ -91,6 +124,9 @@ wezterm.on("update-right-status", function(window, pane)
 
 	-- Right status
 	window:set_right_status(wezterm.format({
+		{ Foreground = { Color = stat_color } },
+		{ Text = stat },
+		{ Text = " | " },
 		{ Foreground = { Color = folder_color } },
 		{ Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
 		{ Text = " | " },
