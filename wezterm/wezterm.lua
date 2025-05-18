@@ -76,6 +76,11 @@ config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- 	mux.set_active_workspace("Work")
 -- end)
 
+wezterm.on("gui-startup", function(cmd)
+	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+	window:gui_window():maximize()
+end)
+
 wezterm.on("update-right-status", function(window, pane)
 	local stat = window:active_workspace()
 	local stat_color = "#7aa2f7" -- default workspace color
