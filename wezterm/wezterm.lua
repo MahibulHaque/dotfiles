@@ -1,32 +1,33 @@
-local wezterm = require("wezterm")
+local wezterm = require 'wezterm'
 local mux = wezterm.mux
 local config = wezterm.config_builder()
-local constants = require("constant")
-local keymaps = require("keymaps")
+local constants = require 'constant'
+local keymaps = require 'keymaps'
+local commands = require 'commands'
 
 -- Keybinding override
-config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
+config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 }
 config.keys = keymaps.keys
 config.key_tables = keymaps.key_tables
 for i = 0, 9 do
-	-- leader + number to activate that tab
-	table.insert(config.keys, {
-		key = tostring(i),
-		mods = "LEADER",
-		action = wezterm.action.ActivateTab(i),
-	})
+  -- leader + number to activate that tab
+  table.insert(config.keys, {
+    key = tostring(i),
+    mods = 'LEADER',
+    action = wezterm.action.ActivateTab(i),
+  })
 end
 
 -- Font settings
 config.font_size = 14
 config.line_height = 1.2
-config.font = wezterm.font("GeistMono Nerd Font")
+config.font = wezterm.font 'GeistMono Nerd Font'
 
 -- Colors
-config.color_scheme = "Tokyo Night"
+config.color_scheme = 'Tokyo Night'
 config.colors = {
-	cursor_bg = "white",
-	cursor_border = "white",
+  cursor_bg = 'white',
+  cursor_border = 'white',
 }
 
 -- Appearance
@@ -36,13 +37,13 @@ config.use_fancy_tab_bar = false
 config.tab_and_split_indices_are_zero_based = true
 config.window_background_image = constants.bg_image
 config.window_padding = {
-	left = 0,
-	right = 0,
-	top = 0,
-	bottom = 0,
+  left = 0,
+  right = 0,
+  top = 0,
+  bottom = 0,
 }
 
-config.default_prog = { "pwsh.exe", "-NoLogo" }
+config.default_prog = { 'pwsh.exe', '-NoLogo' }
 
 -- wezterm.on("gui-startup", function(cmd)
 -- 	-- allow `wezterm start -- something` to affect what we spawn
@@ -76,69 +77,74 @@ config.default_prog = { "pwsh.exe", "-NoLogo" }
 -- 	mux.set_active_workspace("Work")
 -- end)
 
-wezterm.on("gui-startup", function(cmd)
-	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-	window:gui_window():maximize()
+-- Custom commands
+wezterm.on('augment-command-palette', function()
+  return commands
 end)
 
-wezterm.on("update-right-status", function(window, pane)
-	local stat = window:active_workspace()
-	local stat_color = "#7aa2f7" -- default workspace color
-	local prefix = ""
+wezterm.on('gui-startup', function(cmd)
+  local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+  window:gui_window():maximize()
+end)
 
-	-- Colors
-	local arrow_color = "#c6a0f6"
-	local folder_color = "#7dcfff"
-	local command_color = "#e0af68"
+wezterm.on('update-right-status', function(window, pane)
+  local stat = window:active_workspace()
+  local stat_color = '#7aa2f7' -- default workspace color
+  local prefix = ''
 
-	-- Adjust if key table is active
-	if window:active_key_table() then
-		stat = window:active_key_table()
-		stat_color = "#bb9af7" -- key table purple
-	end
+  -- Colors
+  local arrow_color = '#c6a0f6'
+  local folder_color = '#7dcfff'
+  local command_color = '#e0af68'
 
-	-- Adjust if leader key is active
-	if window:leader_is_active() then
-		prefix = " " .. utf8.char(0x1f30a) -- ocean wave emoji
-		stat_color = "#9ece6a" -- green for active leader
-	end
+  -- Adjust if key table is active
+  if window:active_key_table() then
+    stat = window:active_key_table()
+    stat_color = '#bb9af7' -- key table purple
+  end
 
-	-- Change arrow color if tab is not first
-	if window:active_tab():tab_id() ~= 0 then
-		arrow_color = "#1e2030"
-	end
+  -- Adjust if leader key is active
+  if window:leader_is_active() then
+    prefix = ' ' .. utf8.char(0x1f30a) -- ocean wave emoji
+    stat_color = '#9ece6a' -- green for active leader
+  end
 
-	local function basename(s)
-		return string.gsub(s, "(.*[/\\])(.*)", "%2")
-	end
+  -- Change arrow color if tab is not first
+  if window:active_tab():tab_id() ~= 0 then
+    arrow_color = '#1e2030'
+  end
 
-	-- Get current directory
-	local cwd = pane:get_current_working_dir()
-	cwd = cwd and basename(cwd.file_path) or ""
+  local function basename(s)
+    return string.gsub(s, '(.*[/\\])(.*)', '%2')
+  end
 
-	-- Get current command
-	local cmd = pane:get_foreground_process_name()
-	cmd = cmd and basename(cmd) or ""
+  -- Get current directory
+  local cwd = pane:get_current_working_dir()
+  cwd = cwd and basename(cwd.file_path) or ''
 
-	-- Left status
-	window:set_left_status(wezterm.format({
-		{ Foreground = { Color = stat_color } },
-		{ Text = prefix },
-		{ Foreground = { Color = arrow_color } },
-	}))
+  -- Get current command
+  local cmd = pane:get_foreground_process_name()
+  cmd = cmd and basename(cmd) or ''
 
-	-- Right status
-	window:set_right_status(wezterm.format({
-		{ Foreground = { Color = stat_color } },
-		{ Text = stat },
-		{ Text = " | " },
-		{ Foreground = { Color = folder_color } },
-		{ Text = wezterm.nerdfonts.md_folder .. "  " .. cwd },
-		{ Text = " | " },
-		{ Foreground = { Color = command_color } },
-		{ Text = wezterm.nerdfonts.fa_code .. "  " .. cmd },
-		{ Text = "  " },
-	}))
+  -- Left status
+  window:set_left_status(wezterm.format {
+    { Foreground = { Color = stat_color } },
+    { Text = prefix },
+    { Foreground = { Color = arrow_color } },
+  })
+
+  -- Right status
+  window:set_right_status(wezterm.format {
+    { Foreground = { Color = stat_color } },
+    { Text = stat },
+    { Text = ' | ' },
+    { Foreground = { Color = folder_color } },
+    { Text = wezterm.nerdfonts.md_folder .. '  ' .. cwd },
+    { Text = ' | ' },
+    { Foreground = { Color = command_color } },
+    { Text = wezterm.nerdfonts.fa_code .. '  ' .. cmd },
+    { Text = '  ' },
+  })
 end)
 
 return config
