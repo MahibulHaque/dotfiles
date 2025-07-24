@@ -58,3 +58,6 @@ vim.keymap.set('n', '<leader>tf', '<cmd>tabnew %<CR>', { desc = 'Open current bu
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
+
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv=gv", { desc = 'Move selected lines down' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv=gv", { desc = 'Move selected lines up' })

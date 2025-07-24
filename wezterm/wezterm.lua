@@ -30,6 +30,8 @@ config.colors = {
   cursor_border = 'white',
 }
 
+config.window_close_confirmation = 'NeverPrompt'
+
 -- Appearance
 config.hide_tab_bar_if_only_one_tab = false
 config.tab_bar_at_bottom = true
@@ -42,8 +44,22 @@ config.window_padding = {
   top = 0,
   bottom = 0,
 }
-
-config.default_prog = { 'pwsh.exe', '-NoLogo' }
+config.default_prog = { 'wsl.exe', '-d', 'Ubuntu', '--cd', '~', '--', 'zsh' }
+config.launch_menu = {
+  {
+    label = 'Ubuntu (zsh)',
+    args = { 'wsl.exe', '-d', 'Ubuntu', '--cd', '~' },
+  },
+  {
+    label = 'PowerShell',
+    args = { 'pwsh.exe', '-NoLogo' },
+  },
+  {
+    label = 'WSL Default',
+    args = { 'wsl.exe' },
+  },
+}
+-- config.default_prog = { 'pwsh.exe', '-NoLogo' }
 
 -- wezterm.on("gui-startup", function(cmd)
 -- 	-- allow `wezterm start -- something` to affect what we spawn
