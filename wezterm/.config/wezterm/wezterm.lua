@@ -19,10 +19,9 @@ for i = 0, 9 do
 end
 
 -- Font settings
-config.font_size = 18
+config.font_size = 20
 config.line_height = 1.2
-config.font =
-  wezterm.font('JetBrains Mono', { weight = 'Bold', italic = false })
+config.font = wezterm.font('JetBrains Mono', { italic = false })
 
 -- Colors
 config.color_scheme = 'Tokyo Night'
