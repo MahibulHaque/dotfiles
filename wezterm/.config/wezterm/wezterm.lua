@@ -1,5 +1,4 @@
 local wezterm = require 'wezterm'
-local mux = wezterm.mux
 local config = wezterm.config_builder()
 local constants = require 'constant'
 local keymaps = require 'keymaps'
@@ -9,12 +8,13 @@ local commands = require 'commands'
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 2000 }
 config.keys = keymaps.keys
 config.key_tables = keymaps.key_tables
-for i = 0, 9 do
-  -- leader + number to activate that tab
+
+-- leader + number (1-9) to activate tab 0-8
+for i = 1, 9 do
   table.insert(config.keys, {
     key = tostring(i),
     mods = 'LEADER',
-    action = wezterm.action.ActivateTab(i),
+    action = wezterm.action.ActivateTab(i - 1),
   })
 end
 
