@@ -1,0 +1,316 @@
+gui:
+  # Theme and appearance
+  theme:
+    lightTheme: false
+    activeBorderColor:
+      - "#ff9e64"
+      - bold
+    inactiveBorderColor:
+      - "#565f89"
+    selectedLineBgColor:
+      - "#283457"
+    cherryPickedCommitBgColor:
+      - "#414868"
+    cherryPickedCommitFgColor:
+      - "#bb9af7"
+    unstagedChangesColor:
+      - "#f7768e"
+    defaultFgColor:
+      - "#c0caf5"
+
+  # Window sizing and layout
+  windowSize: "normal"
+  sidePanelWidth: 0.3333
+  expandFocusedSidePanel: false
+  mainPanelSplitMode: "flexible"
+
+  # Display options
+  showListFooter: true
+  showFileTree: true
+  showRandomTip: false
+  showBranchCommitHash: true
+  showBottomLine: true
+  showPanelJumps: true
+  showCommandLog: false
+
+  # Commit message settings
+  commitLength:
+    show: true
+  mouseEvents: true
+  skipDiscardChangeWarning: false
+  skipStashWarning: false
+  skipNoStagedFilesWarning: false
+  skipRewordInEditorWarning: false
+
+  # Border style
+  border: "rounded"
+
+git:
+  # Paging and display
+  paging:
+    colorArg: always
+    pager: ""
+
+  # Commit settings
+  commit:
+    signOff: false
+    verbose: default
+    autoWrapCommitMessage: true
+    autoWrapWidth: 72
+
+  # Merging
+  merging:
+    manualCommit: false
+    args: ""
+
+  # Branch settings
+  branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium {{branchName}} --"
+  allBranchesLogCmd: "git log --graph --all --color=always --abbrev-commit --decorate --date=relative --pretty=medium"
+
+  # Disable default behaviors that can be annoying
+  skipHookPrefix: WIP
+  autoFetch: true
+  autoRefresh: true
+  fetchAll: true
+  branchPrefix: ""
+
+  # Diff and log settings
+  log:
+    order: "topo-order"
+    showGraph: "always"
+    showWholeGraph: false
+
+  # Push/pull settings
+  pull:
+    mode: "rebase"
+
+  # Status settings
+  status:
+    showUntrackedFiles: "all"
+
+# Custom commands for enhanced workflow
+customCommands:
+  - key: "<c-p>"
+    command: "git push --force-with-lease"
+    description: "Force push with lease (safer)"
+    context: "global"
+
+  - key: "<c-r>"
+    command: "git reset --hard HEAD~1"
+    description: "Hard reset to previous commit"
+    context: "commits"
+
+  - key: "C"
+    command: "git commit --amend --no-edit"
+    description: "Amend commit without editing message"
+    context: "files"
+
+  - key: "<c-f>"
+    command: "git commit --fixup={{.SelectedLocalCommit.Sha}}"
+    description: "Create fixup commit"
+    context: "commits"
+
+  - key: "<c-s>"
+    command: "git rebase -i --autosquash {{.SelectedLocalCommit.Sha}}~1"
+    description: "Interactive rebase with autosquash"
+    context: "commits"
+
+  - key: "<c-d>"
+    command: "git diff {{.SelectedLocalCommit.Sha}}~1 {{.SelectedLocalCommit.Sha}}"
+    description: "Show diff for selected commit"
+    context: "commits"
+
+  - key: "<c-b>"
+    command: "git checkout -b feature/{{.Form.BranchName}}"
+    description: "Create new feature branch"
+    context: "localBranches"
+    prompts:
+      - type: "input"
+        title: "Branch Name:"
+        key: "BranchName"
+
+  - key: "<c-t>"
+    command: 'git tag -a {{.Form.TagName}} -m "{{.Form.TagMessage}}"'
+    description: "Create annotated tag"
+    context: "commits"
+    prompts:
+      - type: "input"
+        title: "Tag Name:"
+        key: "TagName"
+      - type: "input"
+        title: "Tag Message:"
+        key: "TagMessage"
+
+# Services integration
+services:
+  "github.com": "github"
+  "gitlab.com": "gitlab"
+
+# Notification settings
+notARepository: "prompt"
+promptToReturnFromSubprocess: true
+
+# Keybinding customizations
+keybinding:
+  universal:
+    quit: "q"
+    quit-alt1: "<c-c>"
+    return: "<esc>"
+    quitWithoutChangingDirectory: "Q"
+    togglePanel: "<tab>"
+    prevItem: "<up>"
+    nextItem: "<down>"
+    prevItem-alt: "k"
+    nextItem-alt: "j"
+    prevPage: ","
+    nextPage: "."
+    scrollLeft: "H"
+    scrollRight: "L"
+    gotoTop: "<"
+    gotoBottom: ">"
+    prevBlock: "<left>"
+    nextBlock: "<right>"
+    prevBlock-alt: "h"
+    nextBlock-alt: "l"
+    nextMatch: "n"
+    prevMatch: "N"
+    startSearch: "/"
+    optionMenu: "<disabled>"
+    optionMenu-alt1: "?"
+    select: "<space>"
+    goInto: "<enter>"
+    confirm: "<enter>"
+    remove: "d"
+    new: "n"
+    edit: "e"
+    openFile: "o"
+    scrollUpMain: "<pgup>"
+    scrollDownMain: "<pgdown>"
+    scrollUpMain-alt1: "K"
+    scrollDownMain-alt1: "J"
+    scrollUpMain-alt2: "<c-u>"
+    scrollDownMain-alt2: "<c-d>"
+    executeCustomCommand: ":"
+    createRebaseOptionsMenu: "m"
+    pushFiles: "P"
+    pullFiles: "p"
+    refresh: "R"
+    createPatchOptionsMenu: "<c-p>"
+    nextTab: "]"
+    prevTab: "["
+    nextScreenMode: "+"
+    prevScreenMode: "_"
+    undo: "z"
+    redo: "<c-z>"
+    filteringMenu: "<c-s>"
+    diffingMenu: "W"
+    diffingMenu-alt: "<c-e>"
+    copyToClipboard: "<c-o>"
+    openRecentRepos: "<c-r>"
+    submitEditorText: "<enter>"
+    extrasMenu: "@"
+    toggleWhitespaceInDiffView: "<c-w>"
+    increaseContextInDiffView: "}"
+    decreaseContextInDiffView: "{"
+
+  status:
+    checkForUpdate: "u"
+    recentRepos: "<enter>"
+    allBranchesLogGraph: "a"
+
+  files:
+    commitChanges: "c"
+    commitChangesWithoutHook: "w"
+    amendLastCommit: "A"
+    commitChangesWithEditor: "C"
+    findBaseCommitForFixup: "<c-f>"
+    confirmDiscard: "x"
+    ignoreFile: "i"
+    refreshFiles: "r"
+    stashAllChanges: "s"
+    viewStashOptions: "S"
+    toggleStagedAll: "a"
+    viewResetOptions: "D"
+    fetch: "f"
+    toggleTreeView: "`"
+    openMergeTool: "M"
+    openStatusFilter: "<c-b>"
+
+  branches:
+    createPullRequest: "o"
+    viewPullRequestOptions: "O"
+    copyPullRequestURL: "<c-y>"
+    checkoutBranchByName: "c"
+    forceCheckoutBranch: "F"
+    rebaseBranch: "r"
+    renameBranch: "R"
+    mergeIntoCurrentBranch: "M"
+    viewGitFlowOptions: "i"
+    fastForward: "f"
+    createTag: "T"
+    pushTag: "P"
+    setUpstream: "u"
+    fetchRemote: "f"
+
+  commits:
+    squashDown: "s"
+    renameCommit: "r"
+    renameCommitWithEditor: "R"
+    viewResetOptions: "g"
+    markCommitAsFixup: "f"
+    createFixupCommit: "F"
+    squashAboveCommits: "S"
+    moveDownCommit: "<c-j>"
+    moveUpCommit: "<c-k>"
+    amendToCommit: "A"
+    pickCommit: "p"
+    revertCommit: "t"
+    cherryPickCopy: "C"
+    pasteCommits: "V"
+    markCommitAsBaseForRebase: "B"
+    tagCommit: "T"
+    checkoutCommit: "<space>"
+    resetCherryPick: "<c-R>"
+    copyCommitMessageToClipboard: "<c-y>"
+    openLogMenu: "<c-l>"
+    viewBisectOptions: "b"
+    startInteractiveRebase: "i"
+
+  amendAttribute:
+    resetAuthor: "a"
+    setAuthor: "A"
+    addCoAuthor: "c"
+
+  main:
+    toggleSelectHunk: "a"
+    pickBothHunks: "b"
+
+  submodules:
+    init: "i"
+    update: "u"
+    bulkMenu: "b"
+
+# Startup options
+startuppopupversion: 5
+
+# OS and shell settings
+os:
+  editPreset: "nvim"
+  edit: "nvim {{filename}}"
+  editAtLine: "nvim +{{line}} {{filename}}"
+  editAtLineAndWait: "nvim +{{line}} {{filename}}"
+  open: "open {{filename}}"
+  openLink: "open {{link}}"
+
+# Update settings
+update:
+  method: "prompt"
+  days: 14
+
+# Confirmation settings
+confirmOnQuit: false
+quitOnTopLevelReturn: false
+
+# Disable telemetry
+disableStartupPopups: false
+reporting: "off"
