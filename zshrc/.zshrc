@@ -17,6 +17,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export GOPATH=$HOME/go
 export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+export XDG_CONFIG_HOME="$HOME/.config"
 
 alias vim=nvim
 alias lg=lazygit
