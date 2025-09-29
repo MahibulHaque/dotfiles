@@ -21,3 +21,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 alias vim=nvim
 alias lg=lazygit
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
